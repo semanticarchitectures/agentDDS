@@ -1,0 +1,162 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-dds-gateway
+  namespace: ai-agents
+  labels:
+    app: mcp-dds-gateway
+    version: v1.0.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mcp-dds-gateway
+  template:
+    metadata:
+      labels:
+        app: mcp-dds-gateway
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: gateway
+        image: mcp-dds-gateway:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: gateway
+          protocol: TCP
+        - containerPort: 9090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: NDDSHOME
+          value: "/opt/rti_connext_dds"
+        - name: RTI_LICENSE_FILE
+          value: "/app/certs/rti_license.dat"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9090
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 9090
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+          readOnly: true
+        - name: certs
+          mountPath: /app/certs
+          readOnly: true
+        - name: logs
+          mountPath: /app/logs
+      volumes:
+      - name: config
+        configMap:
+          name: gateway-config
+      - name: certs
+        secret:
+          secretName: gateway-certs
+      - name: logs
+        emptyDir: {}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-dds-gateway
+  namespace: ai-agents
+  labels:
+    app: mcp-dds-gateway
+spec:
+  type: ClusterIP
+  selector:
+    app: mcp-dds-gateway
+  ports:
+  - name: gateway
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway-config
+  namespace: ai-agents
+data:
+  gateway_config.json: |
+    {
+      "domain_id": 0,
+      "gateway": {
+        "name": "mcp-dds-gateway",
+        "version": "1.0.0",
+        "bind_address": "0.0.0.0",
+        "port": 8080
+      },
+      "security": {
+        "enabled": true,
+        "certs_base_path": "./certs"
+      },
+      "topic_allowlist": {
+        "monitoring_agent": {
+          "read": ["SensorData", "SystemHealth", "StatusTopic"],
+          "write": []
+        },
+        "control_agent": {
+          "read": ["SensorData", "StatusTopic"],
+          "write": ["CommandTopic"]
+        }
+      },
+      "performance": {
+        "max_samples_per_read": 100,
+        "batch_timeout_ms": 50,
+        "queue_depth": 1000,
+        "worker_threads": 4
+      },
+      "rate_limiting": {
+        "enabled": true,
+        "requests_per_minute": 1000,
+        "burst_size": 100,
+        "per_agent_limit": 500
+      },
+      "monitoring": {
+        "metrics_enabled": true,
+        "metrics_port": 9090,
+        "health_check_enabled": true,
+        "log_level": "INFO"
+      },
+      "dds_qos": {
+        "reliability": "RELIABLE",
+        "durability": "VOLATILE",
+        "history_kind": "KEEP_LAST",
+        "history_depth": 10
+      }
+    }

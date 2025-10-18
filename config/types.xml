@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<types xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/7.0.0/rti_dds_topic_types.xsd">
+
+    <!-- Sensor Data Type -->
+    <struct name="SensorData">
+        <member name="sensor_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="sensor_type" type="string" stringMaxLength="64"/>
+        <member name="temperature" type="float32"/>
+        <member name="humidity" type="float32"/>
+        <member name="pressure" type="float32"/>
+        <member name="location" type="string" stringMaxLength="256"/>
+        <member name="timestamp" type="int64"/>
+        <member name="status" type="int32"/>
+    </struct>
+
+    <!-- System Health Type -->
+    <struct name="SystemHealth">
+        <member name="system_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="cpu_usage" type="float32"/>
+        <member name="memory_usage" type="float32"/>
+        <member name="disk_usage" type="float32"/>
+        <member name="network_rx_bytes" type="int64"/>
+        <member name="network_tx_bytes" type="int64"/>
+        <member name="uptime_seconds" type="int64"/>
+        <member name="timestamp" type="int64"/>
+        <member name="health_status" type="string" stringMaxLength="32"/>
+    </struct>
+
+    <!-- Command Type -->
+    <struct name="CommandTopic">
+        <member name="command_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="command_type" type="string" stringMaxLength="64"/>
+        <member name="target" type="string" stringMaxLength="256"/>
+        <member name="priority" type="int32"/>
+        <member name="parameters" type="string" stringMaxLength="1024"/>
+        <member name="issued_by" type="string" stringMaxLength="128"/>
+        <member name="timestamp" type="int64"/>
+        <member name="expiry_timestamp" type="int64"/>
+    </struct>
+
+    <!-- Status Type -->
+    <struct name="StatusTopic">
+        <member name="entity_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="status_code" type="int32"/>
+        <member name="status_message" type="string" stringMaxLength="512"/>
+        <member name="timestamp" type="int64"/>
+        <member name="severity" type="string" stringMaxLength="32"/>
+    </struct>
+
+    <!-- Alert Type -->
+    <struct name="AlertTopic">
+        <member name="alert_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="alert_type" type="string" stringMaxLength="64"/>
+        <member name="source" type="string" stringMaxLength="256"/>
+        <member name="severity" type="int32"/>
+        <member name="message" type="string" stringMaxLength="1024"/>
+        <member name="timestamp" type="int64"/>
+        <member name="acknowledged" type="boolean"/>
+    </struct>
+
+</types>

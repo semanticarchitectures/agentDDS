@@ -1,0 +1,53 @@
+# Core Dependencies
+# RTI Connext DDS Python API
+# Note: Install RTI Connext DDS separately from https://www.rti.com/downloads
+# The Python bindings are included with the RTI installation
+
+# MCP (Model Context Protocol) SDK
+mcp>=0.9.0
+
+# Async support
+asyncio-mqtt>=0.16.0
+aiofiles>=23.2.1
+
+# Web server for health endpoints and metrics
+aiohttp>=3.9.0
+aiohttp-cors>=0.7.0
+
+# Prometheus metrics
+prometheus-client>=0.19.0
+
+# Configuration and data handling
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+xmltodict>=0.13.0
+
+# Security and certificates
+cryptography>=41.0.7
+pyjwt>=2.8.0
+
+# Rate limiting
+ratelimit>=2.2.1
+limits>=3.6.0
+
+# Logging and monitoring
+python-json-logger>=2.0.7
+colorlog>=6.8.0
+
+# Utilities
+python-dateutil>=2.8.2
+click>=8.1.7
+
+# Development and Testing
+pytest>=7.4.3
+pytest-asyncio>=0.21.1
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+black>=23.12.0
+flake8>=6.1.0
+mypy>=1.7.1
+isort>=5.13.2
+
+# Type stubs
+types-pyyaml>=6.0.12
+types-python-dateutil>=2.8.19

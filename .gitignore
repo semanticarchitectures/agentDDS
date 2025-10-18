@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+.tox/
+
+# Security - NEVER commit certificates or private keys
+certs/**/*.pem
+certs/**/*.key
+certs/**/*.p7s
+*.pem
+*.key
+*.p7s
+
+# Configuration - May contain sensitive data
+.env
+*.env
+config/local_*.json
+
+# RTI DDS
+rti_license.dat
+*.rtiddsdb
+*.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Docker
+.dockerignore
+
+# Kubernetes secrets
+k8s/secrets/
+
+# Metrics and monitoring
+prometheus_data/
+grafana_data/
