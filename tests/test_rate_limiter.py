@@ -30,8 +30,9 @@ async def test_rate_limiter_allows_requests(rate_limiter):
 @pytest.mark.asyncio
 async def test_rate_limiter_rejects_over_limit(rate_limiter):
     """Test that rate limiter rejects requests over limit."""
-    # Consume all tokens
-    for _ in range(10):  # burst size
+    # Per-agent capacity is burst_size / 2 = 10 / 2 = 5
+    # Consume all tokens from per-agent limiter
+    for _ in range(5):  # per-agent capacity
         await rate_limiter.check_rate_limit("test_agent")
 
     # Next request should be rejected

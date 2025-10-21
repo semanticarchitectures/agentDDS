@@ -33,8 +33,13 @@ def test_dds_manager_initialization(gateway_config, mock_dds):
 
 def test_dds_manager_get_participant_info(dds_manager):
     """Test getting participant information."""
+    # Initialize the participant (mock it)
+    dds_manager.participant = Mock()
+
     info = dds_manager.get_participant_info()
 
     assert isinstance(info, dict)
     assert "domain_id" in info
+    assert info["domain_id"] == 0
     assert "security_enabled" in info
+    assert info["security_enabled"] is False

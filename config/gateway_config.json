@@ -26,6 +26,10 @@
     "query_agent": {
       "read": ["SystemHealth", "SensorData"],
       "write": []
+    },
+    "chatbot_agent": {
+      "read": ["ChatPrompt"],
+      "write": ["ChatResponse"]
     }
   },
   "performance": {

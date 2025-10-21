@@ -59,4 +59,24 @@
         <member name="acknowledged" type="boolean"/>
     </struct>
 
+    <!-- Chat Prompt Type (User to Agent) -->
+    <struct name="ChatPrompt">
+        <member name="prompt_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="user_id" type="string" stringMaxLength="128"/>
+        <member name="prompt_text" type="string" stringMaxLength="4096"/>
+        <member name="timestamp" type="int64"/>
+        <member name="session_id" type="string" stringMaxLength="128"/>
+    </struct>
+
+    <!-- Chat Response Type (Agent to User) -->
+    <struct name="ChatResponse">
+        <member name="response_id" type="string" stringMaxLength="128" key="true"/>
+        <member name="prompt_id" type="string" stringMaxLength="128"/>
+        <member name="user_id" type="string" stringMaxLength="128"/>
+        <member name="response_text" type="string" stringMaxLength="4096"/>
+        <member name="timestamp" type="int64"/>
+        <member name="session_id" type="string" stringMaxLength="128"/>
+        <member name="processing_time_ms" type="int32"/>
+    </struct>
+
 </types>

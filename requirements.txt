@@ -1,7 +1,12 @@
 # Core Dependencies
-# RTI Connext DDS Python API
+# DDS Implementation - Eclipse Cyclone DDS (Open Source)
+cyclonedds>=0.10.2
+
+# Alternative: RTI Connext DDS Python API (Commercial)
 # Note: Install RTI Connext DDS separately from https://www.rti.com/downloads
 # The Python bindings are included with the RTI installation
+# Uncomment the line below if using RTI Connext instead of Cyclone DDS
+# rti.connext>=7.0.0
 
 # MCP (Model Context Protocol) SDK
 mcp>=0.9.0
@@ -37,6 +42,11 @@ colorlog>=6.8.0
 # Utilities
 python-dateutil>=2.8.2
 click>=8.1.7
+requests>=2.31.0
+
+# LLM Integration
+# Ollama for local LLM inference (optional)
+# Install Ollama from https://ollama.ai
 
 # Development and Testing
 pytest>=7.4.3

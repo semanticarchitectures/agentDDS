@@ -1,12 +1,15 @@
 """Tests for metrics collector."""
 import pytest
+from prometheus_client import CollectorRegistry
 from metrics_collector import MetricsCollector
 
 
 @pytest.fixture
 def metrics():
     """Create metrics collector for testing."""
-    return MetricsCollector()
+    # Use a separate registry for each test to avoid duplicate timeseries errors
+    registry = CollectorRegistry()
+    return MetricsCollector(registry=registry)
 
 
 def test_metrics_collector_initialization(metrics):

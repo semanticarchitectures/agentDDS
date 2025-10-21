@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Cyclone DDS Configuration File
+This file configures Eclipse Cyclone DDS settings including security.
+
+To use this configuration:
+export CYCLONEDDS_URI=file://$PWD/config/cyclonedds.xml
+-->
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+
+  <Domain>
+    <Id>0</Id>
+
+    <!-- General settings -->
+    <General>
+      <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+      <AllowMulticast>true</AllowMulticast>
+      <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+
+    <!-- Discovery settings -->
+    <Discovery>
+      <ParticipantIndex>auto</ParticipantIndex>
+      <MaxAutoParticipantIndex>120</MaxAutoParticipantIndex>
+      <SPDPInterval>30s</SPDPInterval>
+    </Discovery>
+
+    <!-- Internal settings -->
+    <Internal>
+      <Watermarks>
+        <WhcHigh>500kB</WhcHigh>
+      </Watermarks>
+    </Internal>
+
+    <!-- Tracing (set to "finest" for debugging) -->
+    <Tracing>
+      <Verbosity>info</Verbosity>
+      <OutputFile>cyclonedds.log</OutputFile>
+    </Tracing>
+
+    <!--
+    Security Configuration (DDS Security)
+
+    Note: DDS Security for Cyclone DDS requires the cyclonedds-security plugin.
+    Install with: pip install cyclonedds-security
+
+    Uncomment the Security section below to enable DDS Security:
+
+    <Security>
+      <Authentication>
+        <Library>dds_security_auth</Library>
+        <IdentityCertificate>file:certs/gateway/identity_cert.pem</IdentityCertificate>
+        <IdentityCA>file:certs/ca/identity_ca_cert.pem</IdentityCA>
+        <PrivateKey>file:certs/gateway/identity_key.pem</PrivateKey>
+      </Authentication>
+
+      <AccessControl>
+        <Library>dds_security_ac</Library>
+        <Governance>file:certs/ca/governance.p7s</Governance>
+        <Permissions>file:certs/gateway/permissions.p7s</Permissions>
+        <PermissionsCA>file:certs/ca/permissions_ca_cert.pem</PermissionsCA>
+      </AccessControl>
+
+      <Cryptographic>
+        <Library>dds_security_crypto</Library>
+      </Cryptographic>
+    </Security>
+    -->
+
+  </Domain>
+
+</CycloneDDS>
